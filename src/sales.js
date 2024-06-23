@@ -46,24 +46,18 @@ d3.csv("donn_prix_vente_reqst.csv", (d) => ({
       new Set(data.map((d) => d.CD_PLAGE_PRIX.toString())),
     );
 
-    const margin = { top: 20, right: 30, bottom: 40, left: 150 };
-    const width = 960 - margin.left - margin.right;
-    const height = 500 - margin.top - margin.bottom;
+    const width = 1200;
+    const height = 500;
     const svg = d3
       .select("#sales")
       .append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      .attr("width", width)
+      .attr("height", height)
+      .append("g");
 
-    svg
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom);
+    svg.attr("width", width).attr("height", height);
 
-    const g = svg
-      .append("g")
-      .attr("transform", `translate(${margin.left},${margin.top})`);
+    const g = svg.append("g");
 
     const y = d3
       .scaleBand()
