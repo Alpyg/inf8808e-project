@@ -12,13 +12,9 @@
       type="text/css"
     />
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        darkMode: false,
-      };
-    </script>
   </head>
   <body
+    data-theme="light"
     class="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]"
   >
     <div class="flex h-full flex-col gap-4 p-4 bg-neutral-400">
@@ -33,7 +29,8 @@
 
     <div
       id="tooltip"
-      class="absolute hidden pointer-events-none p-4 bg-white border"
+      class="absolute pointer-events-none p-2 rounded-lg bg-white border"
+      style="visibility: hidden"
     ></div>
     <div
       class="grid min-h-screen w-full md:grid-cols-[1fr_400px] lg:grid-cols-[1fr_400px]"
@@ -87,7 +84,6 @@
     </div>
 
     <script src="index.js"></script>
-    <script src="helper.js"></script>
     <script src="preprocess.js"></script>
     <script src="interaction.js"></script>
     <script src="viz.js"></script>

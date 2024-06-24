@@ -80,6 +80,10 @@ const regionIdsWanteds = [
   "17",
 ];
 
+let startYear;
+let endYear;
+let startMonth;
+let endMonth;
 d3.csv("donn_hypoth_reqst.csv").then((rawData) => {
   const { minDate, maxDate } = getDateRange(rawData);
   startYear = minDate.getUTCFullYear();
@@ -96,8 +100,6 @@ d3.csv("donn_hypoth_reqst.csv").then((rawData) => {
     endMonth,
   );
   build(stackedData);
-
-  console.log(stackedData);
 
   populateDropdown(regionIdsWanted, (regionId) => {
     addRegion(regionId, regionIdsWanted, removeRegionCallback);
@@ -163,8 +165,11 @@ function setSizing() {
   const margin = { top: 20, right: 30, bottom: 80, left: 150 };
   const width = 1200 - margin.left - margin.right;
   const height = 500 - margin.top - margin.bottom;
-  const svg = d3
-    .select("#content")
+  const content = d3.select("#content");
+
+  content.select("svg").remove();
+
+  const svg = content
     .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)

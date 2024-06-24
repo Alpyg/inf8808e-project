@@ -125,15 +125,12 @@ function drawChart(svg, series, xScale, yScale, color, height, width) {
         let regionId = null;
         let value = null;
         Object.keys(d.data).forEach((key) => {
-          console.log(key);
           if (typeof d.data[key] === "number") {
-            console.log(key);
             count += d.data[key];
             if (count === d[1]) {
               regionId = key;
               value = d.data[key];
             }
-            console.log(count);
           }
         });
         // Show the tooltip
