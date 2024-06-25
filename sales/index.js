@@ -188,6 +188,13 @@ d3.csv("donn_prix_vente_reqst.csv", (d) => ({
         .append("g")
         .attr("class", `legend-item legend-item-${key}`)
         .attr("transform", `translate(0, ${i * 20})`)
+        .style("cursor", "pointer") 
+        .on("mouseover", function() {
+          d3.select(this).style("outline", "1px solid black");
+        })
+        .on("mouseout", function() {
+          d3.select(this).style("outline", null);
+        })
         .on("click", function () {
           const isHidden = d3.select(`.price-range-${key}`).style("display") === "none";
           d3.selectAll(`.price-range-${key}`).style("display", isHidden ? null : "none");
@@ -210,15 +217,15 @@ d3.csv("donn_prix_vente_reqst.csv", (d) => ({
         .append("rect")
         .attr("x", 0)
         .attr("y", 0)
-        .attr("width", 12)
-        .attr("height", 12)
+        .attr("width", 15)
+        .attr("height", 15)
         .attr("fill", color(key));
 
       legendItem
         .append("text")
         .attr("x", 20)
         .attr("y", 5)
-        .attr("dy", "0.35em")
+        .attr("dy", "0.50em")
         .text(`${priceRanges[key]}`);
     });
 
