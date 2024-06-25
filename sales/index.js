@@ -168,6 +168,11 @@ d3.csv("donn_prix_vente_reqst.csv", (d) => ({
             keys = keys.filter((k) => k !== key);
           }
 
+          if (keys.length == 0){
+            keys.push(key);
+            d3.selectAll(`.price-range-${key}`).style("display", null);
+          }
+
           updateBars();
         });
 
