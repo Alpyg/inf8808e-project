@@ -135,17 +135,47 @@ d3.csv("donn_prix_vente_reqst.csv", (d) => ({
       .attr("class", "y-axis")
       .call(d3.axisLeft(y).tickFormat((d) => d));
 
-    // Hover effect
+    // Add tooltip element
+    const tooltip = d3.select("body").append("div")
+      .attr("class", "tooltip")
+      .style("opacity", 0)
+      .style("position", "absolute")
+      .style("padding", "8px")
+      .style("background", "rgba(0, 0, 0, 0.8)")
+      .style("color", "white")
+      .style("border-radius", "4px")
+      .style("pointer-events", "none");
+
+    // Hover effect with tooltip
     bars
-      .on("mouseover", function (_, d) {
+      .on("mouseover", function (event, d) {
         const hoveredRegion = d.data.region;
         d3.selectAll(".bar").attr("fill-opacity", 0.3);
         d3.selectAll(".bar")
           .filter((bar) => bar.data.region === hoveredRegion)
           .attr("fill-opacity", 1);
+
+        const tooltipData = keys.map((key) => ({
+          range: priceRanges[key],
+          value: d.data[key] || 0
+        }));
+
+        tooltip.transition().duration(200).style("opacity", .9);
+        tooltip.html(`
+          <strong>${hoveredRegion}</strong><br>
+          ${tooltipData.map(item => `${item.range}: ${item.value}`).join('<br>')}
+        `)
+          .style("left", (event.pageX + 15) + "px")
+          .style("top", (event.pageY - 28) + "px");
+      })
+      .on("mousemove", function (event) {
+        tooltip
+          .style("left", (event.pageX + 15) + "px")
+          .style("top", (event.pageY - 28) + "px");
       })
       .on("mouseout", function () {
         d3.selectAll(".bar").attr("fill-opacity", 1);
+        tooltip.transition().duration(500).style("opacity", 0);
       });
 
     // Legend
@@ -153,7 +183,7 @@ d3.csv("donn_prix_vente_reqst.csv", (d) => ({
       .append("g")
       .attr("transform", `translate(${width - 120},${margin.top})`);
 
-      possibleKeys.forEach((key, i) => {
+    possibleKeys.forEach((key, i) => {
       const legendItem = legend
         .append("g")
         .attr("class", `legend-item legend-item-${key}`)
@@ -232,14 +262,9 @@ d3.csv("donn_prix_vente_reqst.csv", (d) => ({
         .data((d) => d)
         .transition()
         .attr("x", (d) => {
-          console.log(d)
-          start = d[0]
-          if (!keys.includes("1")){
-            start -= d["data"]["1"];
-          }
-          if (!keys.includes("2") && start !== 0){
-            start -= d["data"]["2"];
-          }
+          let start = d[0];
+          if (!keys.includes("1")) start -= d.data["1"];
+          if (!keys.includes("2") && start !== 0) start -= d.data["2"];
           return x(start);
         })
         .attr("width", (d) => x(d[1]) - x(d[0]));
@@ -247,4 +272,4 @@ d3.csv("donn_prix_vente_reqst.csv", (d) => ({
       // Update the x-axis
       g.select(".x-axis").transition().call(d3.axisBottom(x).ticks(10, "s"));
     }
-  })
+  });
