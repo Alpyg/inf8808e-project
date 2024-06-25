@@ -42,8 +42,12 @@ d3.csv("donn_prix_vente_reqst.csv", (d) => ({
       }, {}),
     }));
 
-    const keys = Array.from(
-      new Set(data.map((d) => d.CD_PLAGE_PRIX.toString())),
+    const possibleKeys = Array.from(
+      new Set(data.map((d) => d.CD_PLAGE_PRIX.toString()))
+    );
+
+    let keys = Array.from(
+      new Set(data.map((d) => d.CD_PLAGE_PRIX.toString()))
     );
 
     const margin = { top: 20, right: 110, bottom: 100, left: 150 };
@@ -61,7 +65,7 @@ d3.csv("donn_prix_vente_reqst.csv", (d) => ({
       .append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
 
-      // Add x-axis label
+    // Add x-axis label
     svg
       .append("text")
       .attr("class", "x-axis-label")
@@ -80,14 +84,13 @@ d3.csv("donn_prix_vente_reqst.csv", (d) => ({
       .attr("y", -30) // Adjust this value as needed
       .text("Régions administratives du Québec");
 
-
     const y = d3
       .scaleBand()
       .domain(stackedData.map((d) => d.region))
       .range([0, height])
       .padding(0.1);
 
-    const x = d3
+    let x = d3
       .scaleLinear()
       .domain([
         0,
@@ -104,7 +107,7 @@ d3.csv("donn_prix_vente_reqst.csv", (d) => ({
       .order(d3.stackOrderNone)
       .offset(d3.stackOffsetNone);
 
-    const layers = stack(stackedData);
+    let layers = stack(stackedData);
 
     const bars = g
       .selectAll(".serie")
@@ -112,7 +115,7 @@ d3.csv("donn_prix_vente_reqst.csv", (d) => ({
       .enter()
       .append("g")
       .attr("fill", (d) => color(d.key))
-      .attr("class", "price-range")
+      .attr("class", (d) => `price-range price-range-${d.key}`)
       .selectAll("rect")
       .data((d) => d)
       .enter()
@@ -150,24 +153,93 @@ d3.csv("donn_prix_vente_reqst.csv", (d) => ({
       .append("g")
       .attr("transform", `translate(${width - 120},${margin.top})`);
 
-    keys.forEach((key, i) => {
-      legend
+      possibleKeys.forEach((key, i) => {
+      const legendItem = legend
+        .append("g")
+        .attr("class", `legend-item legend-item-${key}`)
+        .attr("transform", `translate(0, ${i * 20})`)
+        .on("click", function () {
+          const isHidden = d3.select(`.price-range-${key}`).style("display") === "none";
+          d3.selectAll(`.price-range-${key}`).style("display", isHidden ? null : "none");
+
+          if (isHidden) {
+            keys.push(key);
+          } else {
+            keys = keys.filter((k) => k !== key);
+          }
+
+          updateBars();
+        });
+
+      legendItem
         .append("rect")
         .attr("x", 0)
-        .attr("y", i * 20)
+        .attr("y", 0)
         .attr("width", 12)
         .attr("height", 12)
         .attr("fill", color(key));
 
-      legend
+      legendItem
         .append("text")
         .attr("x", 20)
-        .attr("y", i * 20 + 5)
+        .attr("y", 5)
         .attr("dy", "0.35em")
-        // @ts-ignore
         .text(`${priceRanges[key]}`);
     });
+
+    function updateBars() {
+      // Update the stack and layers based on the current keys
+      const newStack = d3
+        .stack()
+        .keys(possibleKeys)
+        .order(d3.stackOrderNone)
+        .offset(d3.stackOffsetNone);
+
+      layers = newStack(stackedData);
+
+      // Update the x scale domain
+      x.domain([
+        0,
+        d3.max(stackedData, (d) => d3.sum(keys, (key) => d[+key])) || 0,
+      ]).nice();
+
+      // Update the y scale domain
+      y.domain(stackedData.map((d) => d.region));
+
+      // Redraw bars
+      const updatedBars = g.selectAll(".price-range")
+        .data(layers);
+
+      updatedBars.exit().remove();
+
+      const newBars = updatedBars.enter().append("g")
+        .attr("fill", (d) => color(d.key))
+        .attr("class", (d) => `price-range price-range-${d.key}`)
+        .selectAll("rect")
+        .data((d) => d)
+        .enter()
+        .append("rect")
+        .attr("class", "bar")
+        .attr("y", (d) => y(d.data.region))
+        .attr("height", y.bandwidth() * 1.1);
+
+      updatedBars.merge(newBars).selectAll("rect")
+        .data((d) => d)
+        .transition()
+        .attr("x", (d) => {
+          console.log(d)
+          start = d[0]
+          if (!keys.includes("1")){
+            start -= d["data"]["1"];
+          }
+          if (!keys.includes("2") && start !== 0){
+            start -= d["data"]["2"];
+          }
+          return x(start);
+        })
+        .attr("width", (d) => x(d[1]) - x(d[0]));
+
+      // Update the x-axis
+      g.select(".x-axis").transition().call(d3.axisBottom(x).ticks(10, "s"));
+    }
   })
-  .catch((e) => {
-    console.error("Error loading CSV data: ", e);
-  });
