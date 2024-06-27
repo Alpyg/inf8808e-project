@@ -15,7 +15,7 @@
   </head>
   <body
     data-theme="light"
-    class="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[135px_1fr]"
+    class="grid min-h-screen w-full lg:grid-cols-[135px_1fr_340px]"
   >
     <div class="flex h-full flex-col gap-4 p-4 bg-neutral-400">
       <a class="p-2 font-bold btn" href="/">Acceuil</a>
@@ -27,52 +27,46 @@
       <a class="p-2 font-bold btn" href="/mortgages">Hypothèques</a>
     </div>
 
-    <div class="grid min-h-screen w-full lg:grid-cols-[1fr_340px]">
-      <div
-        class="flex-1 gap-8 relative flex flex-col justify-start items-center"
+    <div class="relative space-y-4">
+      <h1
+        class="w-full flex justify-center items-center h-12 text-xl text-center font-bold"
       >
-        <h1
-          class="w-full flex justify-center items-center h-12 text-xl text-center font-bold"
+        La détresse financière au Québec en nombre
+      </h1>
+      <svg class="mx-auto" id="mapSvg"></svg>
+      <svg class="mx-auto" id="legendSvg"></svg>
+      <div
+        id="tooltip"
+        class="absolute pointer-events-none p-2 rounded-lg bg-white border"
+        style="visibility: hidden"
+      ></div>
+    </div>
+    <div class="flex h-full flex-col gap-4 p-4 bg-neutral-400">
+      <div class="time_filter" id="time_filter">
+        <label class="text-white font-bold text-lg" for="start-year"
+          >Choisissez la période à couvrir</label
         >
-          La détresse financière au Québec en nombre
-        </h1>
-        <div class="flex-1 flex flex-col gap-8 justify-start items-center">
-          <svg id="mapSvg"></svg>
-          <svg id="legendSvg"></svg>
-          <div
-            id="tooltip"
-            class="absolute pointer-events-none p-2 rounded-lg bg-white border"
-            style="visibility: hidden"
-          ></div>
-        </div>
-      </div>
-      <div class="flex h-full flex-col gap-4 p-4 bg-neutral-400">
-        <div class="time_filter" id="time_filter">
-          <label class="text-white font-bold text-lg" for="start-year"
-            >Choisissez la période à couvrir</label
+        <div class="grid gap-1 grid-cols-[2fr_3fr_3fr] items-center">
+          <label for="startYearSelect" class="text-white font-bold"
+            >Début</label
           >
-          <div class="grid gap-1 grid-cols-[2fr_3fr_3fr] items-center">
-            <label for="startYearSelect" class="text-white font-bold"
-              >Début</label
-            >
-            <select
-              class="select select-sm select-bordered"
-              id="startYearSelect"
-            ></select>
-            <select
-              class="select select-sm select-bordered"
-              id="startMonthSelect"
-            ></select>
-            <label for="endYearSelect" class="text-white font-bold">Fin</label>
-            <select
-              class="select select-sm select-bordered"
-              id="endYearSelect"
-            ></select>
-            <select
-              class="select select-sm select-bordered"
-              id="endMonthSelect"
-            ></select>
-          </div>
+          <select
+            class="select select-sm select-bordered"
+            id="startYearSelect"
+          ></select>
+          <select
+            class="select select-sm select-bordered"
+            id="startMonthSelect"
+          ></select>
+          <label for="endYearSelect" class="text-white font-bold">Fin</label>
+          <select
+            class="select select-sm select-bordered"
+            id="endYearSelect"
+          ></select>
+          <select
+            class="select select-sm select-bordered"
+            id="endMonthSelect"
+          ></select>
         </div>
       </div>
     </div>

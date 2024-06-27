@@ -1,4 +1,3 @@
-
 function createScales(width, height) {
   const xScale = d3.scaleTime().range([0, width]);
   const yScale = d3.scaleLinear().range([height, 0]);
@@ -28,7 +27,16 @@ function createStack(regionIdsWanteds) {
     .offset(d3.stackOffsetNone);
 }
 
-function drawChart(svg, series, xScale, yScale, color, height, width, regionsMaps) {
+function drawChart(
+  svg,
+  series,
+  xScale,
+  yScale,
+  color,
+  height,
+  width,
+  regionsMaps,
+) {
   // Draw the layers
   svg
     .selectAll(".layer")
@@ -142,8 +150,8 @@ function drawChart(svg, series, xScale, yScale, color, height, width, regionsMap
             `Région: ${regionsMaps[regionId]} <br>Date: ${d.data.date.toISOString().substring(0, 7)}<br>Nombre d'hypohtèques spécifique à cette région: ${value} <br >Nombre d'hypohtèques total avec les régions inférieurs: ${d[1]}`,
           )
           .style("visibility", "visible")
-          .style("left", `${event.pageX + 10}px`)
-          .style("top", `${event.pageY + 10}px`);
+          .style("left", `${event.pageX - 130}px`)
+          .style("top", `${event.pageY - 10}px`);
 
         // Make the dot visible
         d3.select(event.currentTarget)

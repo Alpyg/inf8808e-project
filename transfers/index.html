@@ -15,7 +15,7 @@
   </head>
   <body
     data-theme="light"
-    class="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[135px_1fr]"
+    class="grid min-h-screen w-full lg:grid-cols-[135px_1fr_340px]"
   >
     <div class="flex h-full flex-col gap-4 p-4 bg-neutral-400">
       <a class="p-2 font-bold btn" href="/">Acceuil</a>
@@ -27,43 +27,45 @@
       <a class="p-2 font-bold btn" href="/mortgages">Hypothèques</a>
     </div>
 
-    <div class="grid min-h-screen w-full lg:grid-cols-[1fr_340px]">
-      <div
-        class="gap-8 relative flex flex-col justify-start items-center"
+    <div class="gap-8 relative flex flex-col justify-start items-center">
+      <h1
+        class="w-full flex justify-center items-center h-12 text-xl text-center font-bold"
       >
-        <h1
-          class="w-full flex justify-center items-center h-12 text-xl text-center font-bold"
-        >
-          PLACEHOLDER
-        </h1>
-        <div class="flex gap-8 justify-start items-center">
-          <div id="heatmap"></div>
-          <div id="legend""></div>
-        </div>
+        PLACEHOLDER
+      </h1>
+      <div class="flex gap-8 justify-start items-center">
+        <div id="heatmap"></div>
+        <div id="legend"></div>
       </div>
+    </div>
 
-      <div class="flex h-full flex-col gap-4 p-4 bg-neutral-400">
-        <div class="w-full">
-          <label for="timeSelector" class="text-white font-bold text-lg"
-            >Sélectionner l'interval de temps:</label
-          >
-          <select id="timeSelector" class="w-full p-2 border rounded-md">
-            <option value="month">Mensuel</option>
-            <option value="year">Annuel</option>
-          </select>
-        </div>
-        <div class="w-full">
-          <label for="regionSelector" class="text-white font-bold text-lg">Sélectionner les régions:</label>
-          <select id="regionSelector" multiple class="w-full p-2 border rounded-md">
-            <option value="Tout"></option>
-          </select>
-        </div>
-        <!--         <label for="startDate" class="ml-4 mr-2">Date de début:</label>
+    <div class="flex h-full flex-col gap-4 p-4 bg-neutral-400">
+      <div class="w-full">
+        <label for="timeSelector" class="text-white font-bold text-lg"
+          >Sélectionner l'interval de temps:</label
+        >
+        <select id="timeSelector" class="w-full p-2 border rounded-md">
+          <option value="month">Mensuel</option>
+          <option value="year">Annuel</option>
+        </select>
+      </div>
+      <div class="w-full">
+        <label for="regionSelector" class="text-white font-bold text-lg"
+          >Sélectionner les régions:</label
+        >
+        <select
+          id="regionSelector"
+          multiple
+          class="w-full p-2 border rounded-md"
+        >
+          <option value="Tout"></option>
+        </select>
+      </div>
+      <!--         <label for="startDate" class="ml-4 mr-2">Date de début:</label>
         <input type="date" id="startDate" class="p-2 border rounded-md">
         <label for="endDate" class="ml-4 mr-2">Date de fin:</label>
         <input type="date" id="endDate" class="p-2 border rounded-md">
         <button id="applyFilters" class="ml-4 p-2 border rounded-md bg-blue-500 text-white">Appliquer</button> -->
-      </div>
     </div>
 
     <script src="index.js"></script>
