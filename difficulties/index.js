@@ -227,7 +227,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
     const legendContainerWidth = 800;
-    const legendContainerHeight = 70;
+    const legendContainerHeight = 60;
 
     const legendSvg = d3
       .select(legendRef)
@@ -261,7 +261,7 @@ document.addEventListener("DOMContentLoaded", function () {
     legendSvg
       .append("rect")
       .attr("x", legendContainerWidth * 0.3)
-      .attr("y", legendContainerHeight / 3)
+      .attr("y", legendContainerHeight / 4)
       .attr("width", legendContainerWidth * 0.4)
       .attr("height", legendContainerHeight / 3)
       .style("fill", "url(#legendGradient)");
@@ -278,7 +278,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     legendSvg
       .append("g")
-      .attr("transform", `translate(0, ${legendContainerHeight * 0.65})`)
+      .attr("transform", `translate(0, ${legendContainerHeight / 2 + 5})`)
       .call(legendAxis)
       .select(".domain")
       .remove();
@@ -286,15 +286,16 @@ document.addEventListener("DOMContentLoaded", function () {
     legendSvg
       .append("text")
       .attr("x", legendContainerWidth / 2)
-      .attr("y", legendContainerHeight)
+      .attr("y", legendContainerHeight - 1)
       .attr("text-anchor", "middle")
+      .attr("class", "mb-2")
       .style("font-size", "12px")
       .text("Nombre total de détresse financière");
 
     legendSvg
       .append("text")
       .attr("x", legendContainerWidth / 3 - 50)
-      .attr("y", legendContainerHeight * 0.65 + 5)
+      .attr("y", legendContainerHeight / 2)
       .attr("text-anchor", "end")
       .style("font-size", "12px")
       .text("Faible");
@@ -302,7 +303,7 @@ document.addEventListener("DOMContentLoaded", function () {
     legendSvg
       .append("text")
       .attr("x", legendContainerWidth - (legendContainerWidth / 3 - 50))
-      .attr("y", legendContainerHeight * 0.65 + 5)
+      .attr("y", legendContainerHeight / 2)
       .attr("text-anchor", "start")
       .style("font-size", "12px")
       .text("Élevé");
