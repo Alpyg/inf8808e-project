@@ -15,7 +15,11 @@ function setDateFilters(callback, minDate, maxDate) {
   endMonthSelect.innerHTML = "";
 
   // Populate the year dropdowns with the range from minDate to maxDate
-  for (let year = minDate.getUTCFullYear(); year <= maxDate.getUTCFullYear(); year++) {
+  for (
+    let year = minDate.getUTCFullYear();
+    year <= maxDate.getUTCFullYear();
+    year++
+  ) {
     const startOption = document.createElement("option");
     startOption.value = year;
     startOption.textContent = year;
@@ -29,8 +33,18 @@ function setDateFilters(callback, minDate, maxDate) {
 
   // Populate the month dropdowns with all months
   const months = [
-    "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
-    "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+    "Janvier",
+    "Février",
+    "Mars",
+    "Avril",
+    "Mai",
+    "Juin",
+    "Juillet",
+    "Août",
+    "Septembre",
+    "Octobre",
+    "Novembre",
+    "Décembre",
   ];
   months.forEach((month, index) => {
     const startOption = document.createElement("option");
@@ -48,7 +62,10 @@ function setDateFilters(callback, minDate, maxDate) {
   function updateEndMonths() {
     const selectedEndYear = parseInt(endYearSelect.value, 10);
     const selectedEndMonth = parseInt(endMonthSelect.value, 10);
-    const maxEndMonth = selectedEndYear === maxDate.getUTCFullYear() ? maxDate.getUTCMonth() + 1 : 12;
+    const maxEndMonth =
+      selectedEndYear === maxDate.getUTCFullYear()
+        ? maxDate.getUTCMonth() + 1
+        : 12;
     endMonthSelect.innerHTML = ""; // Clear previous options
 
     for (let i = 0; i < maxEndMonth; i++) {
@@ -148,7 +165,9 @@ function renderChart(data) {
       }, {}),
     }));
 
-    const possibleKeys = Array.from(new Set(data.map((d) => d.CD_PLAGE_PRIX.toString())));
+    const possibleKeys = Array.from(
+      new Set(data.map((d) => d.CD_PLAGE_PRIX.toString())),
+    );
 
     let keys = Array.from(new Set(data.map((d) => d.CD_PLAGE_PRIX.toString())));
 
@@ -195,7 +214,10 @@ function renderChart(data) {
 
     let x = d3
       .scaleLinear()
-      .domain([0, d3.max(stackedData, (d) => d3.sum(keys, (key) => d[+key])) || 0])
+      .domain([
+        0,
+        d3.max(stackedData, (d) => d3.sum(keys, (key) => d[+key])) || 0,
+      ])
       .nice()
       .range([0, width]);
 
@@ -281,9 +303,7 @@ function renderChart(data) {
       .select("#content-ventes")
       .append("div")
       .attr("class", "legend-container-ventes")
-      .style("position", "absolute")
-      
-      
+      .style("position", "absolute");
 
     legend
       .append("div")
@@ -291,7 +311,6 @@ function renderChart(data) {
       .append("text")
       .text("Cliquez pour modifier la visibilité")
       .style("font-weight", "bold");
-
 
     possibleKeys.forEach((key, i) => {
       const legendItem = legend
@@ -393,7 +412,7 @@ function renderChart(data) {
 
     if (data.length === 0) {
       // Display a placeholder when there is no data
-      console.log("0 DATA !!!!")
+      console.log("0 DATA !!!!");
       svg
         .append("text")
         .attr("x", width / 2)
@@ -407,26 +426,38 @@ function renderChart(data) {
   }
 }
 
-
-d3.csv("donn_prix_vente_reqst.csv", (d) => ({
-  DT_DEBUT_MOIS: d.DT_DEBUT_MOIS,
-  ID_REGN_ADMIN: +d.ID_REGN_ADMIN,
-  CD_PLAGE_PRIX: +d.CD_PLAGE_PRIX,
-  CD_NATR_ACTE_JURDQ: +d.CD_NATR_ACTE_JURDQ,
-  NB_REQST: +d.NB_REQST,
-})).then((data) => {
+d3.csv(
+  "https://www.donneesquebec.ca/recherche/dataset/statistiques-du-registre-foncier-du-quebec-sur-le-marche-immobilier/resource/d1ce4f2f-f5bc-492e-81a5-2347ed9c8c1a/download/donn_hypoth_reqst.csv",
+  (d) => ({
+    DT_DEBUT_MOIS: d.DT_DEBUT_MOIS,
+    ID_REGN_ADMIN: +d.ID_REGN_ADMIN,
+    CD_PLAGE_PRIX: +d.CD_PLAGE_PRIX,
+    CD_NATR_ACTE_JURDQ: +d.CD_NATR_ACTE_JURDQ,
+    NB_REQST: +d.NB_REQST,
+  }),
+).then((data) => {
   const { minDate, maxDate } = getDateRange(data);
-  
-  setDateFilters((startYear, endYear, startMonth, endMonth) => {
-    const filteredData = filterDataByDate(data, startYear, endYear, startMonth, endMonth);
-    renderChart(filteredData);
-  }, minDate, maxDate);
+
+  setDateFilters(
+    (startYear, endYear, startMonth, endMonth) => {
+      const filteredData = filterDataByDate(
+        data,
+        startYear,
+        endYear,
+        startMonth,
+        endMonth,
+      );
+      renderChart(filteredData);
+    },
+    minDate,
+    maxDate,
+  );
 
   renderChart(data); // Initial render
 });
 
 function getDateRange(data) {
-  const dates = data.map(d => new Date(d.DT_DEBUT_MOIS));
+  const dates = data.map((d) => new Date(d.DT_DEBUT_MOIS));
   const minDate = new Date(Math.min(...dates));
   const maxDate = new Date(Math.max(...dates));
   return { minDate, maxDate };
