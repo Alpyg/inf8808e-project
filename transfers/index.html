@@ -42,18 +42,22 @@
         </div>
       </div>
 
-      <div class="flex h-full flex-col gap-1 p-4 bg-neutral-400">
-        <label for="timeSelector" class="text-white font-bold text-lg"
-          >Sélectionner l'interval de temps:</label
-        >
-        <select id="timeSelector" class="p-2 border rounded-md">
-          <option value="month">Mensuel</option>
-          <option value="year">Annuel</option>
-        </select>
-        <label for="regionSelector" class="text-white font-bold text-lg">Sélectionner les régions:</label>
-        <select id="regionSelector" multiple class="p-2 border rounded-md">
-          <option value="Tout"></option>
-        </select>
+      <div class="flex h-full flex-col gap-4 p-4 bg-neutral-400">
+        <div class="w-full">
+          <label for="timeSelector" class="text-white font-bold text-lg"
+            >Sélectionner l'interval de temps:</label
+          >
+          <select id="timeSelector" class="w-full p-2 border rounded-md">
+            <option value="month">Mensuel</option>
+            <option value="year">Annuel</option>
+          </select>
+        </div>
+        <div class="w-full">
+          <label for="regionSelector" class="text-white font-bold text-lg">Sélectionner les régions:</label>
+          <select id="regionSelector" multiple class="w-full p-2 border rounded-md">
+            <option value="Tout"></option>
+          </select>
+        </div>
         <!--         <label for="startDate" class="ml-4 mr-2">Date de début:</label>
         <input type="date" id="startDate" class="p-2 border rounded-md">
         <label for="endDate" class="ml-4 mr-2">Date de fin:</label>
