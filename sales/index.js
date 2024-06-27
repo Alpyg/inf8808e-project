@@ -178,11 +178,17 @@ d3.csv("donn_prix_vente_reqst.csv", (d) => ({
     .append("g")
     .attr("transform", `translate(${width - 120},${margin.top})`);
 
+  legend
+    .append("g")
+    .attr("class", "legend-item")
+    .append("text")
+    .text("Cliquez pour modifier la visibilité");
+
   possibleKeys.forEach((key, i) => {
     const legendItem = legend
       .append("g")
       .attr("class", `legend-item legend-item-${key}`)
-      .attr("transform", `translate(0, ${i * 20})`)
+      .attr("transform", `translate(0, ${i * 20 + 5})`)
       .style("cursor", "pointer")
       .on("mouseover", function () {
         d3.select(this).style("outline", "1px solid black");
