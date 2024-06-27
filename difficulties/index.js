@@ -124,8 +124,8 @@ document.addEventListener("DOMContentLoaded", function () {
   function drawMap() {
     if (!geojsonData || csvData.length === 0) return;
 
-    const mapContainerWidth = 500;
-    const mapContainerHeight = 500;
+    const mapContainerWidth = 550;
+    const mapContainerHeight = 550;
 
     const projection = d3
       .geoMercator()
@@ -219,7 +219,7 @@ document.addEventListener("DOMContentLoaded", function () {
         tooltipRef.style.visibility = "visible";
       })
       .on("mousemove", function (event) {
-        tooltipRef.style.top = event.pageY + 0 + "px";
+        tooltipRef.style.top = event.pageY - 75 + "px";
         tooltipRef.style.left = event.pageX - 125 + "px";
       })
       .on("mouseout", function () {
@@ -227,7 +227,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
     const legendContainerWidth = 800;
-    const legendContainerHeight = 60;
+    const legendContainerHeight = 70;
 
     const legendSvg = d3
       .select(legendRef)
