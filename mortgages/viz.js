@@ -1,4 +1,3 @@
-
 function createScales(width, height) {
   const xScale = d3.scaleTime().range([0, width]);
   const yScale = d3.scaleLinear().range([height, 0]);
@@ -28,7 +27,16 @@ function createStack(regionIdsWanteds) {
     .offset(d3.stackOffsetNone);
 }
 
-function drawChart(svg, series, xScale, yScale, color, height, width, regionsMaps) {
+function drawChart(
+  svg,
+  series,
+  xScale,
+  yScale,
+  color,
+  height,
+  width,
+  regionsMaps
+) {
   // Draw the layers
   svg
     .selectAll(".layer")
@@ -42,7 +50,7 @@ function drawChart(svg, series, xScale, yScale, color, height, width, regionsMap
         .x((d) => xScale(new Date(d.data.date)))
         .y0((d) => yScale(d[0]))
         .y1((d) => yScale(d[1]))
-        .curve(d3.curveLinear),
+        .curve(d3.curveLinear)
     )
     .attr("fill", (d, i) => color(i));
 
@@ -139,7 +147,14 @@ function drawChart(svg, series, xScale, yScale, color, height, width, regionsMap
         // Show the tooltip
         d3.select("#tooltip")
           .html(
-            `Région: ${regionsMaps[regionId]} <br>Date: ${d.data.date.toISOString().substring(0, 7)}<br>Nombre d'hypohtèques spécifique à cette région: ${value} <br >Nombre d'hypohtèques total avec les régions inférieurs: ${d[1]}`,
+            `Région: ${regionsMaps[regionId]} <br>Date: ${d.data.date
+              .toISOString()
+              .substring(
+                0,
+                7
+              )}<br>Nombre d'hypohtèques spécifique à cette région: ${value} <br >Nombre d'hypohtèques total avec les régions inférieurs: ${
+              d[1]
+            }`
           )
           .style("visibility", "visible")
           .style("left", `${event.pageX + 10}px`)

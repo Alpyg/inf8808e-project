@@ -44,10 +44,9 @@ function filterYearsAndMonths(data, startYear, endYear, startMonth, endMonth) {
   });
 }
 
-// Example preprocess.js functions
 function filterRegions(rawData, regionIds) {
   return rawData.filter((d) =>
-    regionIds.includes(d.ID_REGN_ADMIN.toString().padStart(3, "0")),
+    regionIds.includes(d.ID_REGN_ADMIN.toString().padStart(3, "0"))
   );
 }
 
@@ -68,14 +67,14 @@ function prepareStackedData(
   startYear,
   endYear,
   startMonth,
-  endMonth,
+  endMonth
 ) {
   const filteredData = filterYearsAndMonths(
     rawData,
     startYear,
     endYear,
     startMonth,
-    endMonth,
+    endMonth
   );
   const data = filterRegions(filteredData, regionIdsWanted);
   const groupedData = d3.group(data, (d) => new Date(d.DT_DEBUT_MOIS));

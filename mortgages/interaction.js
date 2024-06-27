@@ -20,7 +20,7 @@ function populateDropdown(regionIdsWanted, addRegionCallback) {
     const selectedRegion = event.target.value;
     addRegionCallback(selectedRegion);
     const selectedOption = dropdown.querySelector(
-      `option[value="${selectedRegion}"]`,
+      `option[value="${selectedRegion}"]`
     );
     if (selectedOption) selectedOption.remove();
     dropdown.value = ""; // Reset to placeholder

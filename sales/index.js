@@ -43,7 +43,7 @@ d3.csv("donn_prix_vente_reqst.csv", (d) => ({
     }));
 
     const keys = Array.from(
-      new Set(data.map((d) => d.CD_PLAGE_PRIX.toString())),
+      new Set(data.map((d) => d.CD_PLAGE_PRIX.toString()))
     );
 
     const margin = { top: 20, right: 110, bottom: 100, left: 150 };
@@ -61,25 +61,22 @@ d3.csv("donn_prix_vente_reqst.csv", (d) => ({
       .append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
 
-      // Add x-axis label
     svg
       .append("text")
       .attr("class", "x-axis-label")
       .attr("text-anchor", "middle")
       .attr("x", width / 2)
-      .attr("y", height + 80) // Adjust this value as needed
+      .attr("y", height + 80)
       .text("Nombre d'achats par gamme de prix");
 
-    // Add y-axis label
     svg
       .append("text")
       .attr("class", "y-axis-label")
       .attr("text-anchor", "middle")
       .attr("transform", "rotate(-90)")
       .attr("x", -height / 2)
-      .attr("y", -30) // Adjust this value as needed
+      .attr("y", -30)
       .text("Régions administratives du Québec");
-
 
     const y = d3
       .scaleBand()
@@ -132,7 +129,6 @@ d3.csv("donn_prix_vente_reqst.csv", (d) => ({
       .attr("class", "y-axis")
       .call(d3.axisLeft(y).tickFormat((d) => d));
 
-    // Hover effect
     bars
       .on("mouseover", function (_, d) {
         const hoveredRegion = d.data.region;
@@ -145,7 +141,6 @@ d3.csv("donn_prix_vente_reqst.csv", (d) => ({
         d3.selectAll(".bar").attr("fill-opacity", 1);
       });
 
-    // Legend
     const legend = svg
       .append("g")
       .attr("transform", `translate(${width - 120},${margin.top})`);

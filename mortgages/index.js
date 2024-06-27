@@ -105,8 +105,8 @@ let endYear;
 let startMonth;
 let endMonth;
 
-const graph = d3.select('.graph');
-const svgContainer = graph.select('.stackedArea-svg');
+const graph = d3.select(".graph");
+const svgContainer = graph.select(".stackedArea-svg");
 const margin = { top: 50, right: 30, bottom: 70, left: 80 };
 
 function setSizing() {
@@ -115,13 +115,13 @@ function setSizing() {
   const width = bounds.width - margin.left - margin.right;
   const height = 600 - margin.top - margin.bottom;
 
-  svgContainer
-    .attr('width', bounds.width)
-    .attr('height', 600);
+  svgContainer.attr("width", bounds.width).attr("height", 600);
 
-  const svg = svgContainer.selectAll('g').data([0])
-    .join('g')
-    .attr('transform', `translate(${margin.left},${margin.top})`);
+  const svg = svgContainer
+    .selectAll("g")
+    .data([0])
+    .join("g")
+    .attr("transform", `translate(${margin.left},${margin.top})`);
 
   return { width, height, svg };
 }
@@ -133,10 +133,9 @@ function build(data) {
   console.log(data);
   const series = stack(data);
 
-  svg.selectAll("*").remove(); // Clear the SVG before drawing
+  svg.selectAll("*").remove();
 
   if (data.length === 0) {
-    // Display a placeholder when there is no data
     svg
       .append("text")
       .attr("x", width / 2)
@@ -144,12 +143,13 @@ function build(data) {
       .attr("text-anchor", "middle")
       .attr("font-size", "16px")
       .attr("fill", "gray")
-      .text("Désolé, aucune donnée disponible pour la période ou les régions sélectionnées.");
+      .text(
+        "Désolé, aucune donnée disponible pour la période ou les régions sélectionnées."
+      );
     return;
   }
 
   if (data.length === 1) {
-    // Display a placeholder when there is no data
     svg
       .append("text")
       .attr("x", width / 2)
@@ -162,57 +162,86 @@ function build(data) {
   }
 
   setScaleDomains(xScale, yScale, data, series);
-  drawChart(
-    svg,
-    series,
-    xScale,
-    yScale,
-    color,
-    height,
-    width,
-    regionsMaps,
-  );
+  drawChart(svg, series, xScale, yScale, color, height, width, regionsMaps);
 }
 
-d3.csv('donn_hypoth_reqst.csv', d3.autoType).then(function (rawData) {
+d3.csv("donn_hypoth_reqst.csv", d3.autoType).then(function (rawData) {
   const { minDate, maxDate } = getDateRange(rawData);
-   
+
   startYear = minDate.getUTCFullYear();
- 
+
   endYear = maxDate.getUTCFullYear();
- 
+
   startMonth = minDate.getUTCMonth() + 1;
 
   endMonth = maxDate.getUTCMonth() + 1;
 
-
-  const stackedData = prepareStackedData(rawData, regionIdsWanted, startYear, endYear, startMonth, endMonth);
+  const stackedData = prepareStackedData(
+    rawData,
+    regionIdsWanted,
+    startYear,
+    endYear,
+    startMonth,
+    endMonth
+  );
   build(stackedData);
 
   populateDropdown(regionIdsWanted, (regionId) => {
     addRegion(regionId, regionIdsWanted, removeRegionCallback);
-    const updatedData = prepareStackedData(rawData, regionIdsWanted, startYear, endYear, startMonth, endMonth);
+    const updatedData = prepareStackedData(
+      rawData,
+      regionIdsWanted,
+      startYear,
+      endYear,
+      startMonth,
+      endMonth
+    );
     build(updatedData);
   });
 
   function removeRegionCallback(regionId) {
     removeRegion(regionId, regionIdsWanted, removeRegionCallback);
-    const updatedData = prepareStackedData(rawData, regionIdsWanted, startYear, endYear, startMonth, endMonth);
+    const updatedData = prepareStackedData(
+      rawData,
+      regionIdsWanted,
+      startYear,
+      endYear,
+      startMonth,
+      endMonth
+    );
     build(updatedData);
   }
   updateSelectedRegions(regionIdsWanted, removeRegionCallback);
 
-  setDateFilters((newStartYear, newEndYear, newStartMonth, newEndMonth) => {
-    startYear = newStartYear;
-    endYear = newEndYear;
-    startMonth = newStartMonth;
-    endMonth = newEndMonth;
-    const updatedData = prepareStackedData(rawData, regionIdsWanted, startYear, endYear, startMonth, endMonth);
-    build(updatedData);
-  }, minDate, maxDate);
+  setDateFilters(
+    (newStartYear, newEndYear, newStartMonth, newEndMonth) => {
+      startYear = newStartYear;
+      endYear = newEndYear;
+      startMonth = newStartMonth;
+      endMonth = newEndMonth;
+      const updatedData = prepareStackedData(
+        rawData,
+        regionIdsWanted,
+        startYear,
+        endYear,
+        startMonth,
+        endMonth
+      );
+      build(updatedData);
+    },
+    minDate,
+    maxDate
+  );
 
-  window.addEventListener('resize', () => {
-    const updatedData = prepareStackedData(rawData, regionIdsWanted, startYear, endYear, startMonth, endMonth);
+  window.addEventListener("resize", () => {
+    const updatedData = prepareStackedData(
+      rawData,
+      regionIdsWanted,
+      startYear,
+      endYear,
+      startMonth,
+      endMonth
+    );
     build(updatedData);
   });
 });
