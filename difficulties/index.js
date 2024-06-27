@@ -226,7 +226,7 @@ document.addEventListener("DOMContentLoaded", function () {
         tooltipRef.style.visibility = "hidden";
       });
 
-    const legendContainerWidth = 600;
+    const legendContainerWidth = 800;
     const legendContainerHeight = 60;
 
     const legendSvg = d3
