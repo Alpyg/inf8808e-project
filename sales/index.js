@@ -136,30 +136,23 @@ d3.csv("donn_prix_vente_reqst.csv", (d) => ({
   const tooltip = d3
     .select("body")
     .append("div")
-    .attr("class", "tooltip")
-    .style("opacity", 0)
-    .style("position", "absolute")
-    .style("padding", "8px")
-    .style("background", "rgba(0, 0, 0, 0.8)")
-    .style("color", "white")
-    .style("border-radius", "4px")
-    .style("pointer-events", "none");
+    .attr(
+      "class",
+      "absolute pointer-events-none p-2 rounded-lg bg-white border text-xs",
+    );
 
   // Hover effect with tooltip
   bars
     .on("mouseover", function (event, d) {
       const hoveredRegion = d.data.region;
-      d3.selectAll(".bar").attr("fill-opacity", 0.3);
-      d3.selectAll(".bar")
-        .filter((bar) => bar.data.region === hoveredRegion)
-        .attr("fill-opacity", 1);
+      d3.selectAll(".bar").filter((bar) => bar.data.region === hoveredRegion);
 
       const tooltipData = keys.map((key) => ({
         range: priceRanges[key],
         value: d.data[key] || 0,
       }));
 
-      tooltip.transition().duration(200).style("opacity", 0.9);
+      tooltip.style("visibility", "visible");
       tooltip
         .html(
           `
@@ -176,8 +169,7 @@ d3.csv("donn_prix_vente_reqst.csv", (d) => ({
         .style("top", event.pageY - 28 + "px");
     })
     .on("mouseout", function () {
-      d3.selectAll(".bar").attr("fill-opacity", 1);
-      tooltip.transition().duration(500).style("opacity", 0);
+      tooltip.style("visibility", "hidden");
     });
 
   // Legend
