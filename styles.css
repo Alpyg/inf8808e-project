@@ -36,17 +36,17 @@ body {
   padding: 20px;
 }
 #svg-container-ventes {
-    position: relative;
-    overflow: visible; /* Allow overflow */
+  position: relative;
+  overflow: visible; /* Allow overflow */
 }
 
 #content-ventes {
-    overflow: visible; /* Allow overflow */
+  overflow: visible; /* Allow overflow */
 }
 
 .legend-container-ventes {
-    position: absolute;
-    margin-left: 55%;
+  position: absolute;
+  margin-left: 55%;
 }
 
 .tooltip {
@@ -79,13 +79,11 @@ h1 {
 #controls {
   margin-top: -100px;
 }
-#controls{
-    margin-top: -100px;
+#controls {
+  margin-top: -100px;
 }
 
-#controlsVentes{
-    margin-top:50px;
-}
-    margin-top:3.25%;
-    margin-right: 20%;
+#controlsVentes {
+  margin-top: 3.25%;
+  margin-right: 20%;
 }
