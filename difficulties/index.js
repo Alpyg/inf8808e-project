@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!geojsonData || csvData.length === 0) return;
 
     const mapContainerWidth = 1000;
-    const mapContainerHeight = 800;
+    const mapContainerHeight = 600;
 
     const projection = d3
       .geoMercator()
@@ -408,4 +408,3 @@ document.addEventListener("DOMContentLoaded", function () {
 
   loadData();
 });
-
