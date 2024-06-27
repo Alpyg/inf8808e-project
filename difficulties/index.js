@@ -109,11 +109,11 @@ document.addEventListener("DOMContentLoaded", function () {
         csvData = parsedData;
         years = [...new Set(parsedData.map((d) => d.year))];
         selectedStartYear = years[0];
-        selectedEndYear = years[0];
+        selectedEndYear = years[years.length - 1];
 
         const uniqueMonths = [...new Set(parsedData.map((d) => d.month))];
         selectedStartMonth = uniqueMonths[0];
-        selectedEndMonth = uniqueMonths[0];
+        selectedEndMonth = uniqueMonths[years.length - 1];
 
         updateControls();
         drawMap();
