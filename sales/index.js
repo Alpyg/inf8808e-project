@@ -206,11 +206,6 @@ d3.csv("donn_prix_vente_reqst.csv", (d) => ({
           d3.select(this).style("text-decoration", "line-through");
         }
 
-        if (keys.length == 0) {
-          keys.push(key);
-          d3.selectAll(`.price-range-${key}`).style("display", null);
-        }
-
         updateBars();
       });
 
