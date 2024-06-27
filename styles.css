@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  background-color: white;
+}
+
 body {
   font-family: Arial, sans-serif;
   display: flex;
@@ -66,4 +70,3 @@ h1 {
 #controls {
   margin-top: -100px;
 }
-
