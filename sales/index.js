@@ -139,7 +139,8 @@ d3.csv("donn_prix_vente_reqst.csv", (d) => ({
     .attr(
       "class",
       "absolute pointer-events-none p-2 rounded-lg bg-white border text-xs",
-    );
+    )
+    .style("visibility", "hidden");
 
   // Hover effect with tooltip
   bars
