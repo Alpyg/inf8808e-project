@@ -124,8 +124,8 @@ document.addEventListener("DOMContentLoaded", function () {
   function drawMap() {
     if (!geojsonData || csvData.length === 0) return;
 
-    const mapContainerWidth = 600;
-    const mapContainerHeight = 600;
+    const mapContainerWidth = 400;
+    const mapContainerHeight = 400;
 
     const projection = d3
       .geoMercator()
