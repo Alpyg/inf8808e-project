@@ -35,6 +35,19 @@ body {
   flex: 1;
   padding: 20px;
 }
+#svg-container-ventes {
+    position: relative;
+    overflow: visible; /* Allow overflow */
+}
+
+#content-ventes {
+    overflow: visible; /* Allow overflow */
+}
+
+.legend-container-ventes {
+    position: absolute;
+    margin-left: 55%;
+}
 
 .tooltip {
   position: absolute;
@@ -72,4 +85,7 @@ h1 {
 
 #controlsVentes{
     margin-top:50px;
+}
+    margin-top:3.25%;
+    margin-right: 20%;
 }

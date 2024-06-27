@@ -111,7 +111,7 @@ function filterDataByDate(data, startYear, endYear, startMonth, endMonth) {
 
 function renderChart(data) {
   // Same chart rendering code as before
-  if(data.length != 0){
+  if (data.length != 0) {
     const regionNames = {
       1: "Bas-Saint-Laurent",
       2: "Saguenay-Lac-Saint-Jean",
@@ -156,7 +156,7 @@ function renderChart(data) {
     width = 1200 - margin.left - margin.right;
     height = 550 - margin.top - margin.bottom;
     svg = d3
-      .select("#content")
+      .select("#content-ventes")
       .html("") // Clear previous SVG content
       .append("svg")
       .attr("width", width + margin.left + margin.right)
@@ -277,21 +277,26 @@ function renderChart(data) {
       });
 
     // Legend
-    const legend = svg
-      .append("g")
-      .attr("transform", `translate(${width - 120},${margin.top})`);
+    const legend = d3
+      .select("#content-ventes")
+      .append("div")
+      .attr("class", "legend-container-ventes")
+      .style("position", "absolute")
+      
+      
 
     legend
-      .append("g")
+      .append("div")
       .attr("class", "legend-item")
       .append("text")
-      .text("Cliquez pour modifier la visibilité");
+      .text("Cliquez pour modifier la visibilité")
+      .style("font-weight", "bold");
+
 
     possibleKeys.forEach((key, i) => {
       const legendItem = legend
-        .append("g")
+        .append("div")
         .attr("class", `legend-item legend-item-${key}`)
-        .attr("transform", `translate(0, ${i * 20 + 5})`)
         .style("cursor", "pointer")
         .on("mouseover", function () {
           d3.select(this).style("outline", "1px solid black");
@@ -319,18 +324,13 @@ function renderChart(data) {
         });
 
       legendItem
-        .append("rect")
-        .attr("x", 0)
-        .attr("y", 0)
-        .attr("width", 15)
-        .attr("height", 15)
-        .attr("fill", color(key));
+        .append("div")
+        .attr("style", "display: inline-block; width: 15px; height: 15px;")
+        .style("background-color", color(key));
 
       legendItem
         .append("text")
-        .attr("x", 20)
-        .attr("y", 5)
-        .attr("dy", "0.50em")
+        .style("margin-left", "10px")
         .text(`${priceRanges[key]}`);
     });
 
@@ -387,7 +387,7 @@ function renderChart(data) {
       // Update the x-axis
       g.select(".x-axis").transition().call(d3.axisBottom(x).ticks(10, "s"));
     }
-  } else{
+  } else {
     g.selectAll("*").remove(); // Clear the SVG before drawing
     svg.selectAll("*").remove();
 
@@ -396,7 +396,7 @@ function renderChart(data) {
       console.log("0 DATA !!!!")
       svg
         .append("text")
-        .attr("x", width/2 )
+        .attr("x", width / 2)
         .attr("y", height / 2)
         .attr("text-anchor", "middle")
         .attr("font-size", "16px")
@@ -406,6 +406,7 @@ function renderChart(data) {
     }
   }
 }
+
 
 d3.csv("donn_prix_vente_reqst.csv", (d) => ({
   DT_DEBUT_MOIS: d.DT_DEBUT_MOIS,
