@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function drawMap() {
     if (!geojsonData || csvData.length === 0) return;
 
-    const mapContainerWidth = 1000;
+    const mapContainerWidth = 600;
     const mapContainerHeight = 600;
 
     const projection = d3
@@ -407,4 +407,3 @@ document.addEventListener("DOMContentLoaded", function () {
 
   loadData();
 });
-
