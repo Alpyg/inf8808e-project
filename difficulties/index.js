@@ -220,7 +220,7 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .on("mousemove", function (event) {
         tooltipRef.style.top = event.pageY - 75 + "px";
-        tooltipRef.style.left = event.pageX - 125 + "px";
+        tooltipRef.style.left = event.pageX - 115 + "px";
       })
       .on("mouseout", function () {
         tooltipRef.style.visibility = "hidden";
